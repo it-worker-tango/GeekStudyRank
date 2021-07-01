@@ -8,7 +8,6 @@ import datetime
 class GeekRank():
 
     def __init__(self) -> None:
-        
         self.headers = {
             "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36",
             "Referer": "https://time.geekbang.org/",
@@ -67,46 +66,61 @@ class GeekRank():
 
 if __name__ == "__main__":
     geek = GeekRank()
-    js_data = geek.get_data()
-    jdData_str = []
-    today = datetime.datetime.today().date()
-    data_str = []#[[x * random.randint(1,3) for x in range(1,52)], [x * random.randint(1,3) for x in range(1,52)]]
-    if js_data:
-        info_data = geek.clear_data(js_data)
-
-        for rank in info_data['list']:
-            rank_index = rank['rank']
-            uid = rank['uid']
-            medal = rank['medal']
-            score = rank['score']
-            points = rank['points']
+    today = (datetime.datetime.now()- datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+    
+    # js_data = geek.get_data()
+    # jdData_str = []
+    
+    # data_str = []#[[x * random.randint(1,3) for x in range(1,52)], [x * random.randint(1,3) for x in range(1,52)]]
+    # if js_data:
+    #     info_data = geek.clear_data(js_data)
+    #     for rank in info_data['list']:
+    #         rank_index = rank['rank']
+    #         uid = rank['uid']
+    #         medal = rank['medal']
+    #         score = rank['score']
+    #         points = rank['points']
             
-            nick_name = geek.get_nick_name(uid)
-            jdData_str.append(nick_name)
-            data_str.append(points)
-            sql = f"INSERT INTO info values('{uid}','{nick_name}','{rank_index}','{points}','{score}','{medal}','{today}')"
-            geek.insert_data(sql)
-        # temp
-        temp = jdData_str[:50]
-        jdData_str = []
-        jdData_str.append(temp)
-        jdData_str.append(temp)
-        jdData_str.append(temp)
-        temp = data_str
-        data_str = []
-        data_str = [[x * random.randint(1,3) for x in range(1,52)], [x * random.randint(1,3) for x in range(1,52)]]
-        data_str.append(temp[:50])
-        print(jdData_str)
-        print(data_str)
+    #         nick_name = geek.get_nick_name(uid)
+    #         jdData_str.append(nick_name)
+    #         data_str.append(points)
+    #         sql = f"INSERT INTO info values('{uid}','{nick_name}','{rank_index}','{points}','{score}','{medal}','{today}')"
+    #         geek.insert_data(sql)
+        
+    #     temp = jdData_str[:50]
+    #     jdData_str = []
+    #     jdData_str.append(temp)
+    #     jdData_str.append(temp)
+    #     jdData_str.append(temp)
+    #     temp = data_str
+    #     data_str = []
+    #     data_str = [[x * random.randint(1,3) for x in range(1,52)], [x * random.randint(1,3) for x in range(1,52)]]
+    #     data_str.append(temp[:50])
+    #     print(jdData_str)
+    #     print(data_str)
+    date_temp = datetime.date.today()
+    years_str = [f"{date_temp.year}-0{date_temp.month}-0{x}" for x in range(1, date_temp.day)]
+    infos = geek.get_info(f"select * from info order by date_str")
+    
+    jdData_str = []
+    ifno_data = {}
+    for i in years_str:
+        ifno_data[i] = {"name":[],"rank":[]}
 
+    for info in infos:
+        ifno_data[info[6]]['name'].append(info[1])
+        ifno_data[info[6]]['rank'].append(info[3])
 
-        infos = geek.get_info(f"select * from info")
-        # date_list = [x for x in range(1, datetime.datetime.today().date())]
-        for info in infos:
-            pass
-
-
-        geek.replace_info("rangk.html","years_str", "['2021/07/01', '2021/07/02', '2021/07/03']")
-        geek.replace_info("rangk.html","jdData_str", str(jdData_str))
-        geek.replace_info("rangk.html","data_str", str(data_str))
-        geek.cx.close()
+    data_str = []
+    jdData_str = []
+    print(years_str)
+    print(ifno_data)
+    for i in years_str:
+        data_str.append(ifno_data[i]['rank'][:20])
+        jdData_str.append(ifno_data[i]['name'][:20])
+    print(jdData_str)
+    print(data_str)
+    geek.replace_info("rangk.html","years_str", f"{years_str}")
+    geek.replace_info("rangk.html","jdData_str", str(jdData_str[:30]))
+    geek.replace_info("rangk.html","data_str", str(data_str[:30]))
+    # geek.cx.close()
