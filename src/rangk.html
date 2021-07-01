@@ -1,0 +1,386 @@
+<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=bar-race-country
+-->
+<!DOCTYPE html>
+<html style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body style="height: 100%; margin: 0">
+        <div id="container" style="height: 100%"></div>
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+        <!-- Uncomment this line if you want to dataTool extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use gl extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to echarts-stat extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use map
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/china.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/world.js"></script>
+        -->
+        <!-- Uncomment these two lines if you want to use bmap extension
+        <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=<Your Key Here>"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
+        -->
+
+        <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+
+var option;
+
+
+
+ var years =['2021/07/01', '2021/07/02', '2021/07/03'];
+ var jdData = 
+     [['IT蜗壳-Tango', '罗耀龙@坐忘', '梅苑', '梦里是谁🌚', '难逃月色', '🕳🕳ʚ 🐮 ɞ🕳🕳', '张沛来', 'gleamyzhong', 'Kian.Lee', '李东旭', '程序猿大叔文海', 'Jesus', 'Neutrons', '旱烟味', '小华哥', 'Jordan', '水中看月', 'cedar', '沐', 'Geek_39a13f', 'KingSwim', 'wugy', 'overheat', '自律给我自由', '菜头', '再不睡觉就秃了', 'Y024', '谢钱雨', 'somenzz', 'whoami', 'biny', '……', '王东光', 'snowLeopard93', '玄墨', 'molingwen', 'yangong', '方楚Shelly', '骆俊', '孤星', '安菲尔德', '运斤成风', 'Link.W', '二    懂', '云韵', '张磊', 'L', 'tao', 'lizhou', '章光辉'], ['IT蜗壳-Tango', '罗耀龙@坐忘', '梅苑', '梦里是谁🌚', '难逃月色', '🕳🕳ʚ 🐮 ɞ🕳🕳', '张沛来', 'gleamyzhong', 'Kian.Lee', '李东旭', '程序猿大叔文海', 'Jesus', 'Neutrons', '旱烟味', '小华哥', 'Jordan', '水中看月', 'cedar', '沐', 'Geek_39a13f', 'KingSwim', 'wugy', 'overheat', '自律给我自由', '菜头', '再不睡觉就秃了', 'Y024', '谢钱雨', 'somenzz', 'whoami', 'biny', '……', '王东光', 'snowLeopard93', '玄墨', 'molingwen', 'yangong', '方楚Shelly', '骆俊', '孤星', '安菲尔德', '运斤成风', 'Link.W', '二    懂', '云韵', '张磊', 'L', 'tao', 'lizhou', '章光辉'], ['IT蜗壳-Tango', '罗耀龙@坐忘', '梅苑', '梦里是谁🌚', '难逃月色', '🕳🕳ʚ 🐮 ɞ🕳🕳', '张沛来', 'gleamyzhong', 'Kian.Lee', '李东旭', '程序猿大叔文海', 'Jesus', 'Neutrons', '旱烟味', '小华哥', 'Jordan', '水中看月', 'cedar', '沐', 'Geek_39a13f', 'KingSwim', 'wugy', 'overheat', '自律给我自由', '菜头', '再不睡觉就秃了', 'Y024', '谢钱雨', 'somenzz', 'whoami', 'biny', '……', '王东光', 'snowLeopard93', '玄墨', 'molingwen', 'yangong', '方楚Shelly', '骆俊', '孤星', '安菲尔德', '运斤成风', 'Link.W', '二    懂', '云韵', '张磊', 'L', 'tao', 'lizhou', '章光辉']]
+ 
+ var data = 
+     [[3, 2, 6, 12, 5, 6, 21, 8, 27, 20, 33, 24, 13, 14, 45, 48, 34, 18, 38, 20, 63, 66, 69, 24, 50, 78, 81, 56, 29, 60, 62, 96, 99, 34, 35, 72, 74, 38, 117, 80, 123, 126, 129, 44, 135, 138, 94, 48, 147, 100, 102], [1, 4, 3, 4, 5, 18, 14, 8, 18, 30, 33, 24, 39, 42, 45, 48, 17, 54, 38, 40, 63, 66, 46, 48, 50, 78, 54, 56, 87, 60, 31, 96, 33, 102, 105, 72, 111, 76, 78, 80, 41, 42, 86, 132, 45, 138, 47, 48, 49, 150, 51], [1210, 990, 790, 710, 490, 310, 290, 250, 250, 240, 210, 200, 180, 180, 170, 160, 155, 145, 140, 140, 140, 130, 130, 130, 130, 120, 120, 120, 120, 110, 110, 110, 110, 110, 110, 110, 110, 105, 100, 100, 100, 100, 100, 100, 100, 100, 90, 90, 90, 90]]
+ ;
+
+ option = {
+
+     baseOption: {
+         backgroundColor: '#2c343c', //背景颜色
+         timeline: {
+             data: years,
+             axisType: 'category',
+             autoPlay: true,
+             playInterval: 1500, //播放速度
+
+             left: '5%',
+             right: '5%',
+             bottom: '0%',
+             width: '90%',
+             //  height: null,
+             label: {
+                 normal: {
+                     textStyle: {
+
+                         color: 'red',
+                     }
+                 },
+                 emphasis: {
+                     textStyle: {
+                         color: 'red'
+                     }
+                 }
+             },
+             symbolSize: 10,
+             lineStyle: {
+                 color: '#red'
+             },
+             checkpointStyle: {
+                 borderColor: '#red',
+                 borderWidth: 2
+             },
+             controlStyle: {
+                 showNextBtn: true,
+                 showPrevBtn: true,
+                 normal: {
+                     color: '#ff8800',
+                     borderColor: '#ff8800'
+                 },
+                 emphasis: {
+                     color: 'red',
+                     borderColor: 'red'
+                 }
+             },
+
+         },
+         title: {
+             text: '',
+             right: '2%',
+             bottom: '8%',
+             textStyle: {
+                 fontSize: 50,
+                 color: 'black' //标题字体颜色
+             }
+         },
+         tooltip: {
+             'trigger': 'axis'
+         },
+         calculable: true,
+         grid: {
+             left: '8%',
+             right: '2%',
+             bottom: '6%',
+             top: '0%',
+             containLabel: true
+         },
+         label: {
+             normal: {
+                 textStyle: {
+                     color: 'red'
+                 }
+             }
+         },
+         yAxis: [{
+
+             nameGap: 50,
+             offset: '37',
+             'type': 'category',
+             interval: 50,
+             //inverse: ture,//图表倒叙或者正序排版
+             data: '',
+             nameTextStyle: {
+                 color: 'red'
+             },
+
+
+             axisLabel: {
+                 //rotate:45,
+                 show: false,
+                 textStyle: {
+                     fontSize: 32,
+
+                     color: function(params, Index) { // 标签国家字体颜色
+
+                         //color:function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);//随机生成颜色
+
+                         var colorarrays = ['#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                             '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                             '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622',
+                             '#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                             '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                             '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622',
+                             '#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                             '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                             '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622',
+                             '#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                             '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                             '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622',
+                             '#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                             '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                             '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622',
+                            '#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                             '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                             '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622'
+                         ];
+
+                         //console.log("111", Index, colorarrays[Index],params); //打印序列
+
+                         return colorarrays[jdData[0].indexOf(params)];
+                     },
+
+
+                 }, //rotate:45,
+                 interval: 50
+             },
+             axisLine: {
+
+                 lineStyle: {
+                     color: 'balck' //Y轴颜色
+                 },
+             },
+             splitLine: {
+                 show: false,
+                 lineStyle: {
+                     color: 'balck'
+                 }
+             },
+
+         }],
+         xAxis: [{
+             'type': 'value',
+             'name': '',
+
+             splitNumber: 8, //轴线个数
+             nameTextStyle: {
+                 color: 'balck'
+             },
+             axisLine: {
+                 lineStyle: {
+                     color: '#ffa597' //X轴颜色
+                 }
+             },
+             axisLabel: {
+                 formatter: '{value} '
+             },
+             splitLine: {
+                 show: true,
+                 lineStyle: {
+                     color: '#fedd8b'
+                 }
+             },
+         }],
+         series: [{
+                 'name': '',
+                 'type': 'bar',
+                 markLine: {
+                     label: {
+                         normal: {
+                             show: false
+                         }
+                     },
+                     lineStyle: {
+                         normal: {
+                             color: 'red',
+                             width: 3
+                         }
+                     },
+                 },
+                 label: {
+                     normal: {
+                         show: true,
+                         position: 'right', //数值显示在右侧
+                         formatter: '{c}'
+                     }
+                 },
+                 itemStyle: {
+                     normal: {
+                         color: function(params) {
+                             // build a color map as your need.
+                             //color:function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);//随机生成颜色         
+                             var colorList = ['#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                                 '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                                 '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622',
+                                 '#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                                 '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                                 '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622',
+                                 '#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                                 '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                                 '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622',
+                                 '#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                                 '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                                 '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622',
+                                 '#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                                 '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                                 '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622'
+                             ];
+                             // return colorList[params.dataIndex]
+
+                             console.log("111", params.name); //打印序列
+                             return colorList[jdData[0].indexOf(params.name)];
+                         },
+
+                     }
+                 },
+             },
+
+             {
+                 'name': '',
+                 'type': 'bar',
+                 markLine: {
+                     
+                     
+                     label: {
+                         normal: {
+                             show: false
+                         }
+                     },
+                     lineStyle: {
+                         
+                         normal: {
+                             color: 'red',
+                             width: 3
+                         }
+                     },
+                 },
+                 barWidth: '50%',
+                 barGap: '-100%',
+                 label: {
+                     normal: {
+                         show: true,
+                         fontSize: 16,  //标签国家字体大小
+                         position: 'left', //数值显示在右侧
+                         formatter: function(p) {
+                             return p.name;
+                         }
+                     }
+                 },
+                 itemStyle: {
+                     normal: {
+                         
+                         
+                         color: function(params) {
+                             // build a color map as your need.
+                             //color:function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);//随机生成颜色         
+                             var colorList = ['#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                                 '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                                 '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622',
+                                 '#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                                 '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                                 '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622',
+                                 '#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                                 '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                                 '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622',
+                                 '#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                                 '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                                 '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622'
+                             ];
+                             // return colorList[params.dataIndex]
+
+                             // console.log("111", params.name); //打印序列
+                             return colorList[jdData[0].indexOf(params.name)];
+                         },
+
+                     }
+                 },
+             }
+         ],
+
+         animationEasingUpdate: 'quinticInOut',
+         animationDurationUpdate: 1500, //动画效果
+     },
+
+     options: []
+ };
+ for (var n = 0; n < years.length; n++) {
+
+     var res = [];
+     //alert(jdData.length);
+     for (j = 0; j < data[n].length; j++) {
+         res.push({
+             name: jdData[n][j],
+             value: data[n][j]
+         });
+
+     }
+
+     res.sort(function(a, b) {
+         return b.value - a.value;
+     }).slice(0, 6);
+
+     res.sort(function(a, b) {
+         return a.value - b.value;
+     });
+
+
+     var res1 = [];
+     var res2 = [];
+     //console.log(res);
+     for (t = 0; t < res.length; t++) {
+         res1[t] = res[t].name;
+         res2[t] = res[t].value;
+     }
+     option.options.push({
+         title: {
+             text: years[n] + '年'
+         },
+         yAxis: {
+             data: res1,
+         },
+         series: [{
+             data: res2
+         }, {
+             data: res2
+         }]
+     });
+ }
+
+if (option && typeof option === 'object') {
+    myChart.setOption(option);
+}
+
+        </script>
+    </body>
+</html>
+    
